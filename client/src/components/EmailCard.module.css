@@ -50,14 +50,29 @@
     color: #f8d7da;
 }
 
-.emailClassification.inbox {
-    background-color: #155724;
-    color: #d4edda;
-}
-
 .emailClassification.promotions {
     background-color: #004085;
     color: #cce5ff;
+}
+
+.emailClassification.personal {
+    background-color: #ff6f61;
+    color: #fff5f5;
+}
+
+.emailClassification.travel {
+    background-color: #008080;
+    color: #e0ffff;
+}
+
+.emailClassification.finance {
+    background-color: #006400;
+    color: #90ee90;
+}
+
+.emailClassification.updates {
+    background-color: #808000;
+    color: #f5f5dc;
 }
 
 .emailSubject {

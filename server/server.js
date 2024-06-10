@@ -16,7 +16,7 @@ const genAI = new GoogleGenerativeAI(apiKey);
 
 async function classifyEmails(emails) {
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
-    const prompt = "Classify this email into SPAM/MARKETING/PERSONAL/TRAVEL/FINANCE/IMPORTANT or any other relevent field. Simply return the classification in all caps. A single email may have more than one classification.";
+    const prompt = "Classify this email into SPAM/PROMOTIONS/PERSONAL/TRAVEL/FINANCE/UPDATES/UNCATEGORIZED or any other relevent field. Simply return the classification in all caps. A single email may have more than one classification.";
 
 
     const classifiedEmails = await Promise.all(emails.map(async (email) => {

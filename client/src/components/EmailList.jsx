@@ -71,16 +71,13 @@ const EmailList = ({ setIsLoggedIn }) => {
 		setClassifications(response.data);
 	};
 
-	useEffect(() => {
-		console.log(classifications);
-	}, [classifications]);
-
 	const getClassifications = (index) => {
-		console.log(index);
 		if (classifications.length > 0) {
-			return classifications[index].split(" ");
+			return classifications[index].split(",").map((classification) => {
+				return classification.trim();
+			});
 		}
-		return ["Loading..."];
+		return ["UNCATEGORIZED"];
 	};
 
 	const pingServer = async () => {
