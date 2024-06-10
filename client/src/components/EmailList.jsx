@@ -2,10 +2,12 @@
 import { useEffect, useState } from "react";
 import { gapi } from "gapi-script";
 import axios from "axios";
-import EmailEntry from "./EmailEntry";
+import parseEmail from "../utils/parseEmail";
+import EmailCard from "./EmailCard";
 
 const EmailList = ({ setIsLoggedIn }) => {
 	const [emails, setEmails] = useState([]);
+	const [classifications, setClassifications] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
@@ -66,7 +68,19 @@ const EmailList = ({ setIsLoggedIn }) => {
 		const response = await axios.post("http://localhost:5000/classify", {
 			emails: payload,
 		});
-		console.log("Classified emails", response.data);
+		setClassifications(response.data);
+	};
+
+	useEffect(() => {
+		console.log(classifications);
+	}, [classifications]);
+
+	const getClassifications = (index) => {
+		console.log(index);
+		if (classifications.length > 0) {
+			return classifications[index].split(" ");
+		}
+		return ["Loading..."];
 	};
 
 	const pingServer = async () => {
@@ -108,8 +122,12 @@ const EmailList = ({ setIsLoggedIn }) => {
 				Test Server
 			</button>
 			<ul>
-				{emails.map((email) => (
-					<EmailEntry key={email.id} email={email} />
+				{emails.map((email, index) => (
+					<EmailCard
+						key={email.id}
+						email={parseEmail(email)}
+						classification={getClassifications(index)}
+					/>
 				))}
 			</ul>
 		</div>
