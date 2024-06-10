@@ -4,72 +4,20 @@ import { gapi } from "gapi-script";
 import axios from "axios";
 import parseEmail from "../utils/parseEmail";
 import EmailCard from "./EmailCard";
+import FetchEmails from "../api/fetchEmails";
+import classifyEmails from "../api/ClassifyEmails";
 
 const EmailList = ({ setIsLoggedIn }) => {
 	const [emails, setEmails] = useState([]);
 	const [classifications, setClassifications] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const [loadingClassify, setLoadingClassify] = useState(false);
+	const [loadingPing, setLoadingPing] = useState(false);
 	const [error, setError] = useState(null);
 
 	useEffect(() => {
-		const fetchEmails = async () => {
-			try {
-				const response = await gapi.client.gmail.users.messages.list({
-					userId: "me",
-					maxResults: 2,
-				});
-				const messages = response.result.messages;
-
-				if (messages) {
-					const emailsData = await Promise.all(
-						messages.map(async (message) => {
-							const msg = await gapi.client.gmail.users.messages.get({
-								userId: "me",
-								id: message.id,
-							});
-							return msg.result;
-						})
-					);
-					setEmails(emailsData);
-				} else {
-					setEmails([]);
-				}
-			} catch (err) {
-				console.error("Error fetching emails", err);
-				setError(err);
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		if (gapi.client.gmail) {
-			fetchEmails();
-		} else {
-			const interval = setInterval(() => {
-				if (gapi.client.gmail) {
-					clearInterval(interval);
-					fetchEmails();
-				}
-			}, 100);
-		}
+		FetchEmails(gapi, setLoading, setEmails, setError);
 	}, []);
-
-	const classifyEmails = async (emails) => {
-		const payload = emails.map((email) => {
-			const from = email.payload.headers.find(
-				(header) => header.name === "From"
-			).value;
-			const subject = email.payload.headers.find(
-				(header) => header.name === "Subject"
-			).value;
-			const body = email.snippet;
-			return { from, subject, body };
-		});
-		const response = await axios.post("http://localhost:5000/classify", {
-			emails: payload,
-		});
-		setClassifications(response.data);
-	};
 
 	const getClassifications = (index) => {
 		if (classifications.length > 0) {
@@ -81,8 +29,16 @@ const EmailList = ({ setIsLoggedIn }) => {
 	};
 
 	const pingServer = async () => {
-		const response = await axios.get("http://localhost:5000/");
-		console.log("Response from server", response.data);
+		setLoadingPing(true);
+		try {
+			const response = await axios.get("http://localhost:5000/");
+			console.log("Response from server", response.data);
+		} catch (err) {
+			console.error("Error pinging server", err);
+			setError(err);
+		} finally {
+			setLoadingPing(false);
+		}
 	};
 
 	if (loading) {
@@ -106,17 +62,25 @@ const EmailList = ({ setIsLoggedIn }) => {
 			</button>
 			<button
 				onClick={() => {
-					classifyEmails(emails);
+					classifyEmails(
+						emails,
+						setLoadingClassify,
+						setClassifications,
+						setError,
+						axios
+					);
 				}}
+				disabled={loadingClassify}
 			>
-				Classify Emails
+				{loadingClassify ? "Classifying..." : "Classify Emails"}
 			</button>
 			<button
 				onClick={() => {
 					pingServer();
 				}}
+				disabled={loadingPing}
 			>
-				Test Server
+				{loadingPing ? "Pinging..." : "Test Server"}
 			</button>
 			<ul>
 				{emails.map((email, index) => (
