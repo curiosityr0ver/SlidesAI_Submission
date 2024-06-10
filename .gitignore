@@ -1,4 +1,4 @@
-vite-project/node_modules
-vite-project/.env
+server/node_modules
+server/.env
 Gmail_Classifer/node_modules
 Gmail_Classifer/.env
