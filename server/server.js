@@ -1,6 +1,7 @@
 const express = require('express');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 5000; // Use environment variable for port or default to 5000
@@ -10,7 +11,7 @@ app.use(express.json());
 app.use(cors());
 
 // Replace with your Gemini API key and endpoint URL (obtain from Gemini)
-const apiKey = 'AIzaSyBFgLsNKuYZaxeSbF9hOtFiX6I-1VbcV3g';
+const apiKey = process.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
 
 async function classifyEmails(emails) {

@@ -1,13 +1,14 @@
+/* eslint-disable react/prop-types */
 import { useEffect } from "react";
 import { gapi } from "gapi-script";
 
 const Login = ({ setIsLoggedIn }) => {
+	const GOOGLE_CLIENT_ID = import.meta.env.VITE_APP_GMAIL_CLIENT_ID;
 	useEffect(() => {
 		const initClient = () => {
 			gapi.client
 				.init({
-					clientId:
-						"657445248842-7gncq647td8m36cgdvbltiee3c2891mb.apps.googleusercontent.com",
+					clientId: GOOGLE_CLIENT_ID,
 					scope: "https://www.googleapis.com/auth/gmail.readonly",
 				})
 				.then(
