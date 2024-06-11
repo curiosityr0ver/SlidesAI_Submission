@@ -52,36 +52,46 @@ const EmailList = ({ setIsLoggedIn }) => {
 	return (
 		<div>
 			<h2>Last 10 Emails</h2>
-			<button
-				onClick={() => {
-					gapi.auth2.getAuthInstance().signOut();
-					setIsLoggedIn(false);
+			<div
+				style={{
+					display: "flex",
+					alignItems: "center",
+					justifyContent: "space-around",
+					width: "50%",
+					margin: "auto",
 				}}
 			>
-				Logout
-			</button>
-			<button
-				onClick={() => {
-					classifyEmails(
-						emails,
-						setLoadingClassify,
-						setClassifications,
-						setError,
-						axios
-					);
-				}}
-				disabled={loadingClassify}
-			>
-				{loadingClassify ? "Classifying..." : "Classify Emails"}
-			</button>
-			<button
-				onClick={() => {
-					pingServer();
-				}}
-				disabled={loadingPing}
-			>
-				{loadingPing ? "Pinging..." : "Test Server"}
-			</button>
+				<button
+					onClick={() => {
+						gapi.auth2.getAuthInstance().signOut();
+						setIsLoggedIn(false);
+					}}
+				>
+					Logout
+				</button>
+				<button
+					onClick={() => {
+						classifyEmails(
+							emails,
+							setLoadingClassify,
+							setClassifications,
+							setError,
+							axios
+						);
+					}}
+					disabled={loadingClassify}
+				>
+					{loadingClassify ? "Classifying..." : "Classify Emails"}
+				</button>
+				<button
+					onClick={() => {
+						pingServer();
+					}}
+					disabled={loadingPing}
+				>
+					{loadingPing ? "Pinging..." : "Test Server"}
+				</button>
+			</div>
 			<ul>
 				{emails.map((email, index) => (
 					<EmailCard

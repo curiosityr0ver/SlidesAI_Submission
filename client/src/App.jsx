@@ -9,7 +9,7 @@ function App() {
 	return (
 		<div className="App">
 			<header className="App-header">
-				<h1>Gmail Fetcher</h1>
+				<h1>Email Classifier</h1>
 				{!isLoggedIn ? (
 					<Login setIsLoggedIn={setIsLoggedIn} />
 				) : (

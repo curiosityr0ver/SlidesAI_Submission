@@ -14,7 +14,7 @@ app.use(cors());
 const apiKey = process.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
-const prompt = "Classify this email into SPAM/PROMOTIONS/PERSONAL/TRAVEL/FINANCE/UPDATES/UNCATEGORIZED or any other relevent field. Simply return the classification in all caps. A single email may have more than one classification.";
+const prompt = "Classify this email into SPAM/PROMOTIONS/PERSONAL/TRAVEL/FINANCE/UPDATES/SECURITY/UNCATEGORIZED or any other relevent field. Simply return the classification in all caps. A single email may have more than one classification.";
 const randomMotivationalPrompt = "Write a motivational quote to inspire someone to take action.";
 
 async function classifyEmails(emails) {

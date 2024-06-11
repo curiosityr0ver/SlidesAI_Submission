@@ -4,7 +4,6 @@
 import styles from "./EmailCard.module.css";
 
 const EmailCard = ({ email, classification }) => {
-	console.log(classification);
 	const { sender, subject, body } = email;
 	return (
 		<div className={styles.emailCard}>
