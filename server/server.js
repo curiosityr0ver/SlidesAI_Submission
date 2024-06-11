@@ -31,18 +31,23 @@ async function classifyEmails(emails) {
 }
 
 app.post('/classify', async (req, res) => {
-    console.log("Pinged");
-    const { emails } = req.body;
-    const classifiedEmails = await classifyEmails(emails);
-    res.json(classifiedEmails);
+    try {
+        const { emails } = req.body;
+        const classifiedEmails = await classifyEmails(emails);
+        res.json(classifiedEmails);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 });
 
 app.get('/', async (req, res) => {
-    const generatedQuote = await model.generateContent([randomMotivationalPrompt]);
-    const response = generatedQuote.response.text().split("\n")[0].split('"')[1];
-    res.json({
-        data: response
-    });
+    try {
+        const generatedQuote = await model.generateContent([randomMotivationalPrompt]);
+        const response = generatedQuote.response.text().split("\n")[0].split('"')[1];
+        res.json(response);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 });
 
 

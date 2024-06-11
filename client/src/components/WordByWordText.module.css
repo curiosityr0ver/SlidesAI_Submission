@@ -1,0 +1,40 @@
+/* src/WordByWordText.module.css */
+
+.wordByWordText {
+    font-family: 'Georgia', serif;
+    font-style: italic;
+    color: #f5f5f5;
+    background-color: #333;
+    padding: 24px;
+    border-radius: 8px;
+    margin: 32px auto;
+    max-width: 700px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    line-height: 1.6;
+}
+
+.wordByWordText::before,
+.wordByWordText::after {
+    content: '“';
+    font-size: 2em;
+    position: absolute;
+    color: #888;
+}
+
+.wordByWordText::before {
+    top: -10px;
+    left: 10px;
+}
+
+.wordByWordText::after {
+    content: '”';
+    bottom: -10px;
+    right: 10px;
+}
+
+.wordByWordText:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
+}

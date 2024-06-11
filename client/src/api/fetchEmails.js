@@ -8,7 +8,7 @@ const helperFunction = async (
     try {
         const response = await gapi.client.gmail.users.messages.list({
             userId: "me",
-            maxResults: 10, // Changed to 10 for Last 10 Emails
+            maxResults: 2, // Changed to 10 for Last 10 Emails
         });
         const messages = response.result.messages;
 

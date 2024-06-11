@@ -7,8 +7,10 @@ import EmailCard from "./EmailCard";
 import FetchEmails from "../api/fetchEmails";
 import classifyEmails from "../api/ClassifyEmails";
 import pingServer from "../api/pingServer";
+import WordByWordText from "./WordByWordText";
 
 const EmailList = ({ setIsLoggedIn }) => {
+	const [randomQuote, setRandomQuote] = useState();
 	const [emails, setEmails] = useState([]);
 	const [classifications, setClassifications] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -73,22 +75,25 @@ const EmailList = ({ setIsLoggedIn }) => {
 				</button>
 				<button
 					onClick={() => {
-						pingServer(setLoadingPing, setError);
+						pingServer(setLoadingPing, setError, setRandomQuote);
 					}}
 					disabled={loadingPing}
 				>
 					{loadingPing ? "Pinging..." : "Test Server"}
 				</button>
 			</div>
-			<ul>
-				{emails.map((email, index) => (
-					<EmailCard
-						key={email.id}
-						email={parseEmail(email)}
-						classification={getClassifications(index)}
-					/>
-				))}
-			</ul>
+			{randomQuote && (
+				<div style={{ textAlign: "center", margin: "1rem" }}>
+					<WordByWordText text={randomQuote} interval={100} />
+				</div>
+			)}
+			{emails.map((email, index) => (
+				<EmailCard
+					key={email.id}
+					email={parseEmail(email)}
+					classification={getClassifications(index)}
+				/>
+			))}
 		</div>
 	);
 };
