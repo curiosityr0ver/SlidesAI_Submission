@@ -16,6 +16,7 @@ const genAI = new GoogleGenerativeAI(apiKey);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 const prompt = "Classify this email into SPAM/PROMOTIONS/PERSONAL/TRAVEL/FINANCE/UPDATES/SECURITY/UNCATEGORIZED or any other relevent field. Simply return the classification in all caps. A single email may have more than one classification.";
 const randomMotivationalPrompt = "Write a motivational quote to inspire someone to take action.";
+const describeModelPrompt = "Tell me about yourself. Give details like model, version, parameters, and other relevant information.";
 
 async function classifyEmails(emails) {
     const classifiedEmails = await Promise.all(emails.map(async (email) => {
@@ -42,12 +43,20 @@ app.post('/classify', async (req, res) => {
 
 app.get('/', async (req, res) => {
     try {
-        const generatedQuote = await model.generateContent([randomMotivationalPrompt]);
-        const response = generatedQuote.response.text().split("\n")[0].split('"')[1];
-        res.json(response);
+        // const generatedQuote = await model.generateContent([randomMotivationalPrompt]);
+        const generatedDescription = await model.generateContent([describeModelPrompt]);
+        // const response = generatedQuote.response.text().split("\n")[0].split('"')[1];
+        const description = generatedDescription.response.text();
+        res.json({ description }
+
+        );
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
+});
+
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'UP' });
 });
 
 

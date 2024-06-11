@@ -1,14 +1,18 @@
 /* src/WordByWordText.module.css */
 
+.quoteContainer {
+    margin: 32px auto;
+    max-width: 700px;
+    text-align: center;
+}
+
 .wordByWordText {
     font-family: 'Georgia', serif;
-    font-style: italic;
+    font-size: 1.5em;
     color: #f5f5f5;
     background-color: #333;
     padding: 24px;
     border-radius: 8px;
-    margin: 32px auto;
-    max-width: 700px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
@@ -37,4 +41,12 @@
 .wordByWordText:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
+}
+
+.details {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 10px;
+    text-align: right;
 }

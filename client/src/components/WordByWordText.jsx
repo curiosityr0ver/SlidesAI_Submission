@@ -4,7 +4,11 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./WordByWordText.module.css";
 
-const WordByWordText = ({ text = "", interval = 500 }) => {
+const WordByWordText = ({
+	text = "",
+	details = "gemini-1.5-flash-latest",
+	interval = 500,
+}) => {
 	const [displayedText, setDisplayedText] = useState("");
 
 	useEffect(() => {
@@ -37,11 +41,17 @@ const WordByWordText = ({ text = "", interval = 500 }) => {
 		}
 	};
 
-	return <div className={styles.wordByWordText}>{displayedText}</div>;
+	return (
+		<div className={styles.quoteContainer}>
+			<div className={styles.wordByWordText}>{displayedText}</div>
+			{details && <div className={styles.details}>{details}</div>}
+		</div>
+	);
 };
 
 WordByWordText.propTypes = {
 	text: PropTypes.string,
+	details: PropTypes.string,
 	interval: PropTypes.number,
 };
 
