@@ -6,6 +6,7 @@ import parseEmail from "../utils/parseEmail";
 import EmailCard from "./EmailCard";
 import FetchEmails from "../api/fetchEmails";
 import classifyEmails from "../api/ClassifyEmails";
+import pingServer from "../api/pingServer";
 
 const EmailList = ({ setIsLoggedIn }) => {
 	const [emails, setEmails] = useState([]);
@@ -26,19 +27,6 @@ const EmailList = ({ setIsLoggedIn }) => {
 			});
 		}
 		return ["UNCATEGORIZED"];
-	};
-
-	const pingServer = async () => {
-		setLoadingPing(true);
-		try {
-			const response = await axios.get("http://localhost:5000/");
-			console.log("Response from server", response.data);
-		} catch (err) {
-			console.error("Error pinging server", err);
-			setError(err);
-		} finally {
-			setLoadingPing(false);
-		}
 	};
 
 	if (loading) {
@@ -85,7 +73,7 @@ const EmailList = ({ setIsLoggedIn }) => {
 				</button>
 				<button
 					onClick={() => {
-						pingServer();
+						pingServer(setLoadingPing, setError);
 					}}
 					disabled={loadingPing}
 				>
