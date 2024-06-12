@@ -1,9 +1,14 @@
+import axios from "axios";
+
+const BACKEND_URL_ORIGIN = import.meta.env.VITE_APP_SERVER_ORIGIN
+    || "http://localhost:5000";
+
+
 const classifyEmails = async (
     emails,
     setLoadingClassify,
     setClassifications,
     setError,
-    axios
 ) => {
     setLoadingClassify(true);
     try {
@@ -17,7 +22,7 @@ const classifyEmails = async (
             const body = email.snippet;
             return { from, subject, body };
         });
-        const response = await axios.post("http://localhost:5000/classify", {
+        const response = await axios.post(`${BACKEND_URL_ORIGIN}/classify`, {
             emails: payload,
         });
         setClassifications(response.data);

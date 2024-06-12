@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { gapi } from "gapi-script";
-import axios from "axios";
 import parseEmail from "../utils/parseEmail";
 import EmailCard from "./EmailCard";
 import FetchEmails from "../api/fetchEmails";
@@ -65,8 +64,7 @@ const EmailList = ({ setIsLoggedIn }) => {
 							emails,
 							setLoadingClassify,
 							setClassifications,
-							setError,
-							axios
+							setError
 						);
 					}}
 					disabled={loadingClassify}
