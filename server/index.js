@@ -43,11 +43,9 @@ app.post('/classify', async (req, res) => {
 
 app.get('/', async (req, res) => {
     try {
-        // const generatedQuote = await model.generateContent([randomMotivationalPrompt]);
-        const generatedDescription = await model.generateContent([describeModelPrompt]);
-        // const response = generatedQuote.response.text().split("\n")[0].split('"')[1];
-        const description = generatedDescription.response.text();
-        res.json({ description }
+        const generatedQuote = await model.generateContent([randomMotivationalPrompt]);
+        const response = generatedQuote.response.text().split("\n")[0].split('"')[1];
+        res.json({ response }
 
         );
     } catch (error) {

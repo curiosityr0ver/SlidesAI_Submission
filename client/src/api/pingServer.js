@@ -1,5 +1,8 @@
 import axios from "axios";
 
+const BACKEND_URL_ORIGIN = import.meta.env.VITE_APP_SERVER_ORIGIN
+    || "http://localhost:5000";
+
 const pingServer = async (
     setLoadingPing,
     setError,
@@ -7,7 +10,7 @@ const pingServer = async (
 ) => {
     setLoadingPing(true);
     try {
-        const response = await axios.get("http://localhost:5000/");
+        const response = await axios.get(`${BACKEND_URL_ORIGIN}/`);
         console.log("Response from server", response.data);
         setRandomQuote(response.data);
     } catch (err) {
