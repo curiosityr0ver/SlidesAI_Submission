@@ -45,9 +45,7 @@ app.get('/', async (req, res) => {
     try {
         const generatedQuote = await model.generateContent([randomMotivationalPrompt]);
         const response = generatedQuote.response.text().split("\n")[0].split('"')[1];
-        res.json({ response }
-
-        );
+        res.json(response);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

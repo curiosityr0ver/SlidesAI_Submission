@@ -8,11 +8,12 @@ const pingServer = async (
     setError,
     setRandomQuote
 ) => {
+    console.log(BACKEND_URL_ORIGIN);
     setLoadingPing(true);
     try {
         const response = await axios.get(`${BACKEND_URL_ORIGIN}/`);
-        console.log("Response from server", response.data);
-        setRandomQuote(response.data);
+        console.log("Response from server", response.data.response);
+        // setRandomQuote(response);
     } catch (err) {
         console.error("Error pinging server", err);
         setError(err);
