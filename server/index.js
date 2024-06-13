@@ -1,6 +1,7 @@
 const express = require('express');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -9,6 +10,7 @@ const port = process.env.PORT || 5000; // Use environment variable for port or d
 
 app.use(express.json());
 app.use(cors());
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Replace with your Gemini API key and endpoint URL (obtain from Gemini)
 const apiKey = process.env.GEMINI_API_KEY;
@@ -41,7 +43,8 @@ app.post('/classify', async (req, res) => {
     }
 });
 
-app.get('/', async (req, res) => {
+app.get('/ping', async (req, res) => {
+    console.log("Pinging the model");
     try {
         const generatedQuote = await model.generateContent([randomMotivationalPrompt]);
         const response = generatedQuote.response.text().split("\n")[0].split('"')[1];
@@ -53,6 +56,10 @@ app.get('/', async (req, res) => {
 
 app.get('/health', (req, res) => {
     res.status(200).json({ status: 'UP' });
+});
+
+app.get('/model', async (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 
