@@ -58,15 +58,6 @@ app.get('/health', (req, res) => {
     res.status(200).json({ status: 'UP' });
 });
 
-app.get('/model', async (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-app.get('/model/2', async (req, res) => {
-    res.sendFile(path.join(__dirname, 'public2', 'index.html'));
-});
-
-
 app.listen(port, () => {
     console.clear();
     console.log(`Server listening on port ${port}`);
