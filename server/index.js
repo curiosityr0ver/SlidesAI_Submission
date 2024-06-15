@@ -62,6 +62,9 @@ app.get('/model', async (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+app.get('/model/2', async (req, res) => {
+    res.sendFile(path.join(__dirname, 'public2', 'index.html'));
+});
 
 
 app.listen(port, () => {
